@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Quiz: Condicional (Spanisch)</title>
+<style>
+body { font-family: Arial; background:#f4f4f4; text-align:center; }
+.container { max-width:700px; margin:auto; background:white; padding:20px; border-radius:10px; }
+button { display:block; margin:10px auto; padding:10px; width:80%; font-size:16px; cursor:pointer; }
+.correct { background-color:#4CAF50; color:white; }
+.wrong { background-color:#f44336; color:white; }
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Condicional (Spanisch)</h2>
+<p id="question"></p>
+<div id="answers"></div>
+<p id="score"></p>
+<button onclick="nextQuestion()">Weiter</button>
+</div>
+
+<script>
+let questions = [
+{q:"Yo ______ viajar a España.", a:["querría","quiero","quería","querré"], c:0},
+{q:"Si tuviera dinero, ______ un coche.", a:["compraría","compro","compré","compraba"], c:0},
+{q:"Nosotros ______ ir al cine.", a:["iríamos","vamos","iremos","íbamos"], c:0},
+{q:"¿Qué ______ tú en mi lugar?", a:["harías","haces","hiciste","harás"], c:0},
+{q:"Ella ______ estudiar más.", a:["debería","debe","debió","deberá"], c:0},
+{q:"Participio de 'tener' im Condicional Stamm?", a:["tendr-","ten-","tuv-","tien-"], c:0},
+{q:"Yo ______ comer pizza.", a:["comería","como","comí","comeré"], c:0},
+{q:"Ellos ______ ayudarte.", a:["podrían","pueden","pudieron","podrán"], c:0},
+{q:"¿______ venir conmigo?", a:["Querrías","Quieres","Quisiste","Querrás"], c:0},
+{q:"Nosotros ______ más tiempo.", a:["necesitaríamos","necesitamos","necesitamos","necesitaremos"], c:0},
+{q:"Yo ______ feliz contigo.", a:["sería","soy","fui","seré"], c:0},
+{q:"Si estudiaras, ______ mejores notas.", a:["tendrías","tienes","tuviste","tendrás"], c:0},
+{q:"Ellas ______ viajar más.", a:["querrían","quieren","quisieron","querrán"], c:0},
+{q:"Yo ______ hacerlo mañana.", a:["podría","puedo","pude","podré"], c:0},
+{q:"Nosotros ______ vivir en Madrid.", a:["viviríamos","vivimos","vivimos","viviremos"], c:0},
+{q:"¿Qué ______ vosotros?", a:["haríais","hacéis","hicisteis","haréis"], c:0},
+{q:"Yo ______ decir la verdad.", a:["diría","digo","dije","diré"], c:0},
+{q:"Ellos ______ venir si pudieran.", a:["vendrían","vienen","vinieron","vendrán"], c:0},
+{q:"Yo ______ más si pudiera.", a:["trabajaría","trabajo","trabajé","trabajaré"], c:0},
+{q:"Ella ______ comprarlo.", a:["querría","quiere","quiso","querrá"], c:0},
+{q:"Nosotros ______ ayudarte.", a:["podríamos","podemos","pudimos","podremos"], c:0},
+{q:"Yo ______ estudiar más.", a:["debería","debo","debí","deberé"], c:0},
+{q:"Ellos ______ llegar temprano.", a:["llegarían","llegan","llegaron","llegarán"], c:0},
+{q:"Si pudiera, ______ contigo.", a:["iría","voy","fui","iré"], c:0},
+{q:"Yo ______ feliz.", a:["estaría","estoy","estuve","estaré"], c:0}
+];
+
+let current = 0;
+let score = 0;
+
+function loadQuestion() {
+let q = questions[current];
+document.getElementById("question").innerText = (current+1)+". "+q.q;
+let answersDiv = document.getElementById("answers");
+answersDiv.innerHTML = "";
+q.a.forEach((ans, i)=>{
+let btn = document.createElement("button");
+btn.innerText = ans;
+btn.onclick = ()=>checkAnswer(i);
+answersDiv.appendChild(btn);
+});
+}
+
+function checkAnswer(i){
+let q = questions[current];
+let buttons = document.querySelectorAll("#answers button");
+buttons.forEach((btn, index)=>{
+btn.disabled = true;
+if(index===q.c) btn.classList.add("correct");
+if(index===i && i!==q.c) btn.classList.add("wrong");
+});
+if(i===q.c) score++;
+document.getElementById("score").innerText = "Punkte: "+score;
+}
+
+function nextQuestion(){
+current++;
+if(current<questions.length){
+loadQuestion();
+}else{
+document.getElementById("question").innerText = "Fertig! Punkte: "+score+"/"+questions.length;
+document.getElementById("answers").innerHTML="";
+}
+}
+
+loadQuestion();
+</script>
+</body>
+</html>
